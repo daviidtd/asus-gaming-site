@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Tailwind Navbar with Search</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- ✅ Font Awesome CDN (for Search Icon) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="h-screen bg-black relative overflow-hidden">
+  <!-- Spline 3D Background -->
+  <iframe src="https://my.spline.design/nexbotrobotcharacterconcept-3e77247c6405842759224de349c745ec/"
+          frameborder="0" width="100%" height="100%" class="absolute inset-0 z-0"></iframe>
+
+  <!-- Navbar -->
+  <nav class="max-w-screen-xl mx-auto flex items-center justify-between px-4 py-3 md:py-4 relative z-10">
+    <!-- Logo -->
+    <a href="#">
+      <h1 class="text-red-600 pt-[25px] font-bold hover:text-red-700 text-2xl transition duration-300
+       ease-in-out transform hover:scale-105">ASUS GAMING</h1>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <div class="hidden md:flex items-center gap-6 lg:gap-10 mt-[20px]">
+      <a href="#" class="text-sm text-white font-bold hover:text-green-400 transition duration-50 ease-in-out transform hover:scale-105">HOME</a>
+      <a href="#" class="text-sm text-white font-bold hover:text-green-400 transition duration-50 ease-in-out transform hover:scale-105">ABOUT</a>
+      <a href="#" class="text-sm text-white font-bold hover:text-green-400 transition duration-50 ease-in-out transform hover:scale-105">SERVICES</a>
+      <a href="#" class="text-sm text-white font-bold hover:text-green-400 transition duration-50 ease-in-out transform hover:scale-105">PRODUCT'S</a>
+      <a href="#" class="text-sm text-white font-bold hover:text-green-400 transition duration-50 ease-in-out transform hover:scale-105">GAMING</a>
+      <a href="#" class="text-sm text-white font-bold hover:text-green-400 transition duration-50 ease-in-out transform hover:scale-105">CONTACT</a>
+    </div>
+
+    <!-- Right Section -->
+    <div class="flex items-center gap-3 md:gap-4 mt-4 relative">
+      <!-- 🔍 Search Icon (Font Awesome) -->
+      <div class="relative">
+        <button id="search-toggle" class="text-white text-2xl transition transform hover:scale-110 
+        focus:outline-none">
+          <i class="fas fa-search"></i>
+        </button>
+        <input type="text" id="search-box"
+               placeholder="Search..."
+               class="absolute right-8 top-1 w-40 sm:w-60 px-3 py-1 rounded bg-black text-white m-[0px] 
+               text-sm shadow-md hidden opacity-0 transition-all duration-300 ease-in-out scale-95 z-50">
+      </div>
+
+      <!-- Talk Button (Desktop Only) -->
+      <button class="hidden md:block bg-black text-white border-2 border-red-600 font-bold rounded px-5 py-2 
+      text-xs transition 
+      duration-50 ease-in-out transform hover:scale-105 ">
+        Let's Talk &#8594;
+      </button>
+
+      <!-- Dropdown Toggle (Desktop Only) -->
+      <button id="desktop-menu-btn" class="hidden md:flex h-10 w-10 rounded-full 
+      justify-center items-center text-3xl text-white transition duration-50 transform 
+      hover:scale-110 hover:shadow-lg">
+        &#9776;
+      </button>
+
+      <!-- Desktop Dropdown -->
+      <div id="desktop-dropdown" class="hidden absolute top-full right-0 mt-8 text-white rounded shadow-lg w-32 z-20 bg-black bg-opacity-80">
+        <a href="#" class="block px-4 py-2 text-sm hover:text-green-400 font-bold transition duration-200 ease-in-out transform hover:scale-105">Sign Up</a>
+        <a href="#" class="block px-4 py-2 text-sm font-bold hover:text-green-400 transition duration-200 ease-in-out transform hover:scale-105">Login</a>
+        <a href="#" class="block px-4 py-2 text-sm font-bold hover:text-green-400 transition duration-200 ease-in-out transform hover:scale-105">Logout</a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button id="menu-btn" class="md:hidden text-white text-[30px] transition duration-100 ease-in-out transform hover:scale-105 focus:outline-none">
+        &#9776;
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Dropdown Menu -->
+  <div id="mobile-menu" class="hidden md:hidden flex flex-col items-center pl-[10px] text-white w-full py-4 space-y-3 relative z-10 bg-black bg-opacity-80">
+    <a href="#" class="text-sm font-bold hover:text-green-400 transition duration-50 ease-in-out transform hover:scale-105">HOME</a>
+    <a href="#" class="text-sm font-bold hover:text-green-400 transition duration-50 ease-in-out transform hover:scale-105">ABOUT</a>
+    <a href="#" class="text-sm font-bold hover:text-green-400 transition duration-50 ease-in-out transform hover:scale-105">SERVICES</a>
+    <a href="#" class="text-sm font-bold hover:text-green-400 transition duration-50 ease-in-out transform hover:scale-105">PRODUCT'S</a>
+    <a href="#" class="text-sm font-bold hover:text-green-400 transition duration-50 ease-in-out transform hover:scale-105">GAMING</a>
+    <a href="#" class="text-sm font-bold hover:text-green-400 transition duration-50 ease-in-out transform hover:scale-105">CONTACT</a>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const desktopMenuBtn = document.getElementById('desktop-menu-btn');
+    const desktopDropdown = document.getElementById('desktop-dropdown');
+    const searchToggle = document.getElementById('search-toggle');
+    const searchBox = document.getElementById('search-box');
+
+    // Mobile menu toggle
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // Desktop dropdown toggle
+    if (desktopMenuBtn) {
+      desktopMenuBtn.addEventListener('click', () => {
+        desktopDropdown.classList.toggle('hidden');
+      });
+    }
+
+    // Close dropdown if clicked outside
+    document.addEventListener('click', (e) => {
+      if (!desktopMenuBtn?.contains(e.target) && !desktopDropdown?.contains(e.target)) {
+        desktopDropdown?.classList.add('hidden');
+      }
+    });
+
+    // Toggle Search Input
+    searchToggle.addEventListener('click', () => {
+      const isHidden = searchBox.classList.contains('hidden');
+      if (isHidden) {
+        searchBox.classList.remove('hidden');
+        setTimeout(() => {
+          searchBox.classList.add('opacity-100', 'scale-100');
+          searchBox.classList.remove('opacity-0', 'scale-95');
+          searchBox.focus();
+        }, 10);
+      } else {
+        searchBox.classList.remove('opacity-100', 'scale-100');
+        searchBox.classList.add('opacity-0', 'scale-95');
+        setTimeout(() => {
+          searchBox.classList.add('hidden');
+        }, 300);
+      }
+    });
+  </script>
+</body>
+</html>
